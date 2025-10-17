@@ -5,15 +5,12 @@
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
 <title>Automated Certificate Management Environment (ACME) Profile Sets</title>
-<meta content="Your Name Here" name="author">
+<meta content="David Benjamin" name="author">
 <meta content="
-       TODO Abstract 
+       This document defines how an ACME Server may indicate collections of related certificate profiles to ACME Clients. 
     " name="description">
 <meta content="xml2rfc 3.30.2" name="generator">
-<meta content="next generation" name="keyword">
-<meta content="unicorn" name="keyword">
-<meta content="sparkling distributed ledger" name="keyword">
-<meta content="draft-todo-yourname-protocol-latest" name="ietf.draft">
+<meta content="draft-davidben-acme-profile-sets-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.30.2
     Python 3.12.11
@@ -1049,7 +1046,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <td class="right">October 2025</td>
 </tr></thead>
 <tfoot><tr>
-<td class="left">Here</td>
+<td class="left">Benjamin</td>
 <td class="center">Expires 20 April 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
@@ -1058,22 +1055,22 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <div id="internal-metadata" class="document-information">
 <dl id="identifiers">
 <dt class="label-workgroup">Workgroup:</dt>
-<dd class="workgroup">WG Working Group</dd>
+<dd class="workgroup">Automated Certificate Management Environment</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-todo-yourname-protocol-latest</dd>
+<dd class="internet-draft">draft-davidben-acme-profile-sets-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
 <time datetime="2025-10-17" class="published">17 October 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
-<dd class="intended-status">Informational</dd>
+<dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
 <dd class="expires"><time datetime="2026-04-20">20 April 2026</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
-      <div class="author-name">Y. N. Here</div>
-<div class="org">Your Organization Here</div>
+      <div class="author-name">D. Benjamin</div>
+<div class="org">Google LLC</div>
 </div>
 </dd>
 </dl>
@@ -1081,22 +1078,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">Automated Certificate Management Environment (ACME) Profile Sets</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">TODO Abstract<a href="#section-abstract-1" class="pilcrow">¶</a></p>
-</section>
-<section class="note rfcEditorRemove" id="section-note.1">
-      <h2 id="name-about-this-document">
-<a href="#name-about-this-document" class="section-name selfRef">About This Document</a>
-      </h2>
-<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
-<p id="section-note.1-2">
-        The latest revision of this draft can be found at <span><a href="https://example.com/LATEST">https://example.com/LATEST</a></span>.
-        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-todo-yourname-protocol/">https://datatracker.ietf.org/doc/draft-todo-yourname-protocol/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
-<p id="section-note.1-3">
-        Discussion of this document takes place on the
-        WG Working Group mailing list (<span><a href="mailto:WG@example.com">mailto:WG@example.com</a></span>),
-        which is archived at <span><a href="https://example.com/WG">https://example.com/WG</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
-<p id="section-note.1-4">Source for this draft and an issue tracker can be found at
-        <span><a href="https://github.com/USER/REPO">https://github.com/USER/REPO</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document defines how an ACME Server may indicate collections of related certificate profiles to ACME Clients.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1153,19 +1135,38 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-extensions-to-the-directory" class="internal xref">Extensions to the Directory Resource</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-client-behavior" class="internal xref">Client Behavior</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-acme-directory-metadata-fie" class="internal xref">ACME Directory Metadata Fields</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
 </li>
         </ul>
 </nav>
@@ -1176,7 +1177,9 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">TODO Introduction<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">As PKIs evolve, an application may require multiple certificate profiles to satisfy the range of relying parties it supports. For example, in a certificate deployment transitioning to post-quantum cryptography, newer relying parties may expect post-quantum trust anchors, while older relying parties still only support classical ones. In other deployments, when a certification authority (CA) is found untrustworthy or its keys rotated or compromised, an application may use a certificate from a newer CA with newer relying parties that have removed the old CA, but still provision a certificate from the older CA with older relying parties that do not trust any newer CAs.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2"><span>[<a href="#I-D.ietf-acme-profiles" class="cite xref">I-D.ietf-acme-profiles</a>]</span> defines a mechanism for ACME Clients to choose between different certificate profiles from a single ACME Server. However, in applications that require multiple profiles, an ACME Client must know which profiles are needed. This document extends that mechanism with <em>profile sets</em>.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">A profile set is a set of profiles, defined by the ACME Server and potentially updated over time. An ACME Client configured with a profile set can request a certificate for each profile, transparently updating its certificate set as the profile set evolves.<a href="#section-1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions-and-definitions">
@@ -1190,45 +1193,200 @@ described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</s
 appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="security-considerations">
+<div id="extensions-to-the-directory-resource">
 <section id="section-3">
-      <h2 id="name-security-considerations">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      <h2 id="name-extensions-to-the-directory">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-extensions-to-the-directory" class="section-name selfRef">Extensions to the Directory Resource</a>
       </h2>
-<p id="section-3-1">TODO Security<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-1">An ACME Server that wishes for clients to combine multiple certificate profiles <span class="bcp14">MUST</span> include a new field, <code>profileSets</code>, in the <code>meta</code> field of its Directory object. The field is defined as follows:<a href="#section-3-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-3-2">
+        <dt id="section-3-2.1">
+<code>profileSets</code> (optional, object):</dt>
+        <dd style="margin-left: 1.5em" id="section-3-2.2">
+          <p id="section-3-2.2.1">A map of profile set names to objects describing profile sets. Profile and profile set names <span class="bcp14">MUST NOT</span> overlap.<a href="#section-3-2.2.1" class="pilcrow">¶</a></p>
+</dd>
+      <dd class="break"></dd>
+</dl>
+<p id="section-3-3">Each profile set is described by a JSON object with the following fields:<a href="#section-3-3" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-3-4">
+        <dt id="section-3-4.1">
+<code>description</code> (required, string):</dt>
+        <dd style="margin-left: 1.5em" id="section-3-4.2">
+          <p id="section-3-4.2.1">A human-readable description of the profile set.<a href="#section-3-4.2.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-3-4.3">
+<code>profiles</code> (required, array of string):</dt>
+        <dd style="margin-left: 1.5em" id="section-3-4.4">
+          <p id="section-3-4.4.1">An array of strings, containing the names of the profiles in the profile set.<a href="#section-3-4.4.1" class="pilcrow">¶</a></p>
+</dd>
+      <dd class="break"></dd>
+</dl>
+<p id="section-3-5">The human-readable descriptions are analogous to those of the <code>profiles</code> map defined in <span>[<a href="#I-D.ietf-acme-profiles" class="cite xref">I-D.ietf-acme-profiles</a>]</span>. Their contents are up to the CA; for example, they might be prose descriptions of the properties of the profile, or they might be URLs pointing at a documentation site. ACME Clients <span class="bcp14">SHOULD</span> present these profile set names and descriptions to their operator during initial setup and at appropriate times thereafter.<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-6">Profile sets <span class="bcp14">MAY</span> contain overlapping profiles.<a href="#section-3-6" class="pilcrow">¶</a></p>
+<p id="section-3-7">Together, the <code>profiles</code> and <code>profileSets</code> maps indicate the choices available to the ACME Client operator. An individual profile in a profile set <span class="bcp14">MAY</span> appear in the <code>profiles</code> map if the ACME Server intends it to be a standalone choice for the ACME Client operator. It <span class="bcp14">MAY</span> also be omitted from the <code>profiles</code> map if the ACME Server intends it to be used only in a profile set.<a href="#section-3-7" class="pilcrow">¶</a></p>
+<p id="section-3-8">For example, the following Directory object defines two profile sets, <code>profile1WithExtra</code> and <code>profile2</code>, alongside standalone <code>profile1</code>. An ACME Client might interpret this by offering three choices to the operator, <code>profile1</code>, <code>profile1WithExtra</code>, and <code>profile2</code>, with their corresponding human-readable descriptions.<a href="#section-3-8" class="pilcrow">¶</a></p>
+<p id="section-3-9">The <code>profile1WithExtra</code> profile set consists of <code>profile1</code>, which is also a standalone profile, and <code>profileExtra</code>, which is a profile-set-only profile. The <code>profile2</code> profile set consists of three profile-set-only profiles, <code>profile2a</code>, <code>profile2b</code>, and <code>profileExtra</code>.<a href="#section-3-9" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-3-10">
+<pre>
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "newNonce": "https://example.com/acme/new-nonce",
+  "newAccount": "https://example.com/acme/new-account",
+  "newOrder": "https://example.com/acme/new-order",
+  "newAuthz": "https://example.com/acme/new-authz",
+  "revokeCert": "https://example.com/acme/revoke-cert",
+  "keyChange": "https://example.com/acme/key-change",
+  "meta": {
+    "termsOfService": "https://example.com/acme/terms/2021-10-05",
+    "website": "https://www.example.com/",
+    "caaIdentities": ["example.com"],
+    "externalAccountRequired": false,
+    "profiles": {
+      "profile1": "https://example.com/docs/profiles#profile1",
+    },
+    "profileSets": {
+      "profile1WithExtra": {
+        "description": "https://example.com/docs/profiles#profile1WithExtra",
+        "profiles": ["profile1", "profileExtra"]
+      },
+      "profile2": {
+        "description": "https://example.com/docs/profiles#profile2",
+        "profiles": ["profile2a", "profile2b", "profileExtra"]
+      }
+    }
+  }
+}
+</pre><a href="#section-3-10" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="client-behavior">
+<section id="section-4">
+      <h2 id="name-client-behavior">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-client-behavior" class="section-name selfRef">Client Behavior</a>
+      </h2>
+<p id="section-4-1">An ACME Client that supports profile sets <span class="bcp14">MAY</span> be configured to obtain certificates according to a profile set, rather than an individual profile.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">If configured with a profile set, the ACME Client <span class="bcp14">SHOULD</span> request certificates from each profile in the profile set, creating independent, parallel orders for each. Each profile <span class="bcp14">MAY</span> spend different amounts of time in the "processing" state, so the ACME Client <span class="bcp14">SHOULD</span> support multiple orders in the "processing" state in parallel. Each profile <span class="bcp14">MAY</span> produce certificates with different lifetimes, so the ACME Client <span class="bcp14">SHOULD</span> evaluate each certificate for renewal independently.<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-4-3">The ACME Client <span class="bcp14">SHOULD</span> periodically re-fetch the Directory object to discover updated profile set definitions. For example, the client <span class="bcp14">MAY</span> re-fetch the Directory when it periodically evaluates its certificates for renewal. If the profile set definition has since changed, the ACME Client <span class="bcp14">SHOULD</span> request certificates for any newly-added profiles. Certificates for newly-removed profiles <span class="bcp14">SHOULD NOT</span> be removed until the ACME Client has provisioned some certificate for each profile in the new profile set definition.<a href="#section-4-3" class="pilcrow">¶</a></p>
+<p id="section-4-4">ACME Clients <span class="bcp14">MAY</span> implement the above with the following example procedure, run periodically:<a href="#section-4-4" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4-5">
+<li id="section-4-5.1">
+          <p id="section-4-5.1.1">Fetch the Directory object from the ACME Server.<a href="#section-4-5.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-4-5.2">
+          <p id="section-4-5.2.1">For each profile in the selected profile set:<a href="#section-4-5.2.1" class="pilcrow">¶</a></p>
+<p id="section-4-5.2.2">
+a. Check if the client has an unfinished order for the profile. If so, check if it has entered the "valid" state and download the certificate.<a href="#section-4-5.2.2" class="pilcrow">¶</a></p>
+<p id="section-4-5.2.3">
+b. Otherwise, check if the client already has a certificate for the profile, and if it should be renewed, e.g. because it is soon to expire.<a href="#section-4-5.2.3" class="pilcrow">¶</a></p>
+<p id="section-4-5.2.4">
+c. If the certificate does not exist, or is soon to expire, start a new order with the profile, as described in <span>[<a href="#I-D.ietf-acme-profiles" class="cite xref">I-D.ietf-acme-profiles</a>]</span>, and complete its authorizations.<a href="#section-4-5.2.4" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-4-5.3">
+          <p id="section-4-5.3.1">Cancel any unfinished orders for profiles that are no longer in the profile set.<a href="#section-4-5.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-4-5.4">
+          <p id="section-4-5.4.1">If the client has a certificate for each profile in the profile set, remove certificates for profiles that are no longer in the profile set.<a href="#section-4-5.4.1" class="pilcrow">¶</a></p>
+</li>
+      </ol>
+<p id="section-4-6">Determining which certificate to use with which relying party is out of scope for this document. TLS <span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span> implementations <span class="bcp14">MAY</span> use the procedures defined in Sections <a href="https://rfc-editor.org/rfc/rfc8446#section-4.4.2.2" class="relref">4.4.2.2</a> and <a href="https://rfc-editor.org/rfc/rfc8446#section-4.4.2.3" class="relref">4.4.2.3</a> of <span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>, as well as other TLS extensions, to select certificates.<a href="#section-4-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="security-considerations">
+<section id="section-5">
+      <h2 id="name-security-considerations">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-5-1">The extensions to the ACME protocol described in this document build upon the Security Considerations and threat model defined in <span><a href="https://rfc-editor.org/rfc/rfc8555#section-10.1" class="relref">Section 10.1</a> of [<a href="#RFC8555" class="cite xref">RFC8555</a>]</span>, along with the mechanism defined in <span>[<a href="#I-D.ietf-acme-profiles" class="cite xref">I-D.ietf-acme-profiles</a>]</span>. It does not change the account management or identifier validation flows, so the security considerations are largely unchanged. It also does not change the lifecycle of any individual order, or issuance from the perspective of the server.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">Profile sets allow an ACME Server to help ACME Clients configure themselves appropriately during PKI security transitions, such as a change in algorithm, a change in trusted CAs, or CA key rotation. Most PKIs have far fewer ACME Servers than ACME Clients, with ACME Server operators well-connected to relying party requirements. This can help transitions complete more quickly, and thus allow the PKI to realize the security benefits sooner.<a href="#section-5-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
-<section id="section-4">
+<section id="section-6">
       <h2 id="name-iana-considerations">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-4-1">This document has no IANA actions.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<div id="acme-directory-metadata-fields">
+<section id="section-6.1">
+        <h3 id="name-acme-directory-metadata-fie">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-acme-directory-metadata-fie" class="section-name selfRef">ACME Directory Metadata Fields</a>
+        </h3>
+<p id="section-6.1-1">IANA will add the following entry to the "ACME Directory Metadata Fields" registry within the "Automated Certificate Management Environment (ACME) Protocol" registry group at <a href="https://www.iana.org/assignments/acme">https://www.iana.org/assignments/acme</a>:<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<table class="center" id="table-1">
+          <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Field Name</th>
+              <th class="text-left" rowspan="1" colspan="1">Field Type</th>
+              <th class="text-left" rowspan="1" colspan="1">Reference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">profileSets</td>
+              <td class="text-left" rowspan="1" colspan="1">object</td>
+              <td class="text-left" rowspan="1" colspan="1">This document</td>
+            </tr>
+          </tbody>
+        </table>
 </section>
 </div>
-<div id="sec-normative-references">
-<section id="section-5">
-      <h2 id="name-normative-references">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+</section>
+</div>
+<div id="sec-combined-references">
+<section id="section-7">
+      <h2 id="name-references">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<div id="sec-normative-references">
+<section id="section-7.1">
+        <h3 id="name-normative-references">
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
 <dl class="references">
+<dt id="I-D.ietf-acme-profiles">[I-D.ietf-acme-profiles]</dt>
+        <dd>
+<span class="refAuthor">Gable, A.</span>, <span class="refTitle">"Automated Certificate Management Environment (ACME) Profiles Extension"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-acme-profiles-00</span>, <time datetime="2025-09-08" class="refDate">8 September 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-acme-profiles-00">https://datatracker.ietf.org/doc/html/draft-ietf-acme-profiles-00</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
-    <dd>
+        <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8555">[RFC8555]</dt>
+      <dd>
+<span class="refAuthor">Barnes, R.</span>, <span class="refAuthor">Hoffman-Andrews, J.</span>, <span class="refAuthor">McCarney, D.</span>, and <span class="refAuthor">J. Kasten</span>, <span class="refTitle">"Automatic Certificate Management Environment (ACME)"</span>, <span class="seriesInfo">RFC 8555</span>, <span class="seriesInfo">DOI 10.17487/RFC8555</span>, <time datetime="2019-03" class="refDate">March 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8555">https://www.rfc-editor.org/rfc/rfc8555</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
 </div>
-<div id="acknowledgments">
+<div id="sec-informative-references">
+<section id="section-7.2">
+        <h3 id="name-informative-references">
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="RFC8446">[RFC8446]</dt>
+      <dd>
+<span class="refAuthor">Rescorla, E.</span>, <span class="refTitle">"The Transport Layer Security (TLS) Protocol Version 1.3"</span>, <span class="seriesInfo">RFC 8446</span>, <span class="seriesInfo">DOI 10.17487/RFC8446</span>, <time datetime="2018-08" class="refDate">August 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8446">https://www.rfc-editor.org/rfc/rfc8446</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+</section>
+</div>
+<div id="acknowledgements">
 <section id="appendix-A">
-      <h2 id="name-acknowledgments">
-<a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+      <h2 id="name-acknowledgements">
+<a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
       </h2>
-<p id="appendix-A-1">TODO acknowledge.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-1">Thanks to Aaron Gable for feedback on this document, as well as many valuable design discussions.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
@@ -1237,11 +1395,11 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
       </h2>
 <address class="vcard">
-        <div dir="auto" class="left"><span class="fn nameRole">Your Name Here</span></div>
-<div dir="auto" class="left"><span class="org">Your Organization Here</span></div>
+        <div dir="auto" class="left"><span class="fn nameRole">David Benjamin</span></div>
+<div dir="auto" class="left"><span class="org">Google LLC</span></div>
 <div class="email">
 <span>Email:</span>
-<a href="mailto:your.email@example.com" class="email">your.email@example.com</a>
+<a href="mailto:davidben@google.com" class="email">davidben@google.com</a>
 </div>
 </address>
 </section>
