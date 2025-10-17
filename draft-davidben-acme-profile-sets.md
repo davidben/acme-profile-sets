@@ -63,9 +63,9 @@ Profile sets MAY contain overlapping profiles.
 
 Together, the `profiles` and `profileSets` maps indicate the choices available to the ACME Client operator. An individual profile in a profile set MAY appear in the `profiles` map if the ACME Server intends it to be a standalone choice for the ACME Client operator. It MAY also be omitted from the `profiles` map if the ACME Server intends it to be used only in a profile set.
 
-For example, the following Directory object defines two profile sets, `profile1WithExtra` and `profile2`, alongside standalone `profile1`. An ACME Client might interpret this by offering three choices to the operator, `profile1`, `profile1WithExtra`, and `profile2`, with their corresponding human-readable descriptions.
+For example, the following Directory object defines two profile sets, `profile1Ext` and `profile2`, alongside standalone `profile1`. An ACME Client might interpret this by offering three choices to the operator, `profile1`, `profile1Ext`, and `profile2`, with their corresponding human-readable descriptions.
 
-The `profile1WithExtra` profile set consists of `profile1`, which is also a standalone profile, and `profileExtra`, which is a profile-set-only profile. The `profile2` profile set consists of three profile-set-only profiles, `profile2a`, `profile2b`, and `profileExtra`.
+The `profile1Ext` profile set consists of `profile1`, which is also a standalone profile, and `profileExt`, which is a profile-set-only profile. The `profile2` profile set consists of three profile-set-only profiles, `profile2a`, `profile2b`, and `profileExt`.
 
 ~~~
 HTTP/1.1 200 OK
@@ -87,13 +87,15 @@ Content-Type: application/json
       "profile1": "https://example.com/docs/profiles#profile1",
     },
     "profileSets": {
-      "profile1WithExtra": {
-        "description": "https://example.com/docs/profiles#profile1WithExtra",
-        "profiles": ["profile1", "profileExtra"]
+      "profile1Ext": {
+        "description":
+            "https://example.com/docs/profiles#profile1Ext",
+        "profiles": ["profile1", "profileExt"]
       },
       "profile2": {
-        "description": "https://example.com/docs/profiles#profile2",
-        "profiles": ["profile2a", "profile2b", "profileExtra"]
+        "description":
+            "https://example.com/docs/profiles#profile2",
+        "profiles": ["profile2a", "profile2b", "profileExt"]
       }
     }
   }
