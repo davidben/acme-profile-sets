@@ -57,7 +57,7 @@ Each profile set is described by a JSON object with the following fields:
 `profiles` (required, array of string):
 : An array of strings, containing the names of the profiles in the profile set.
 
-The human-readable describes are analogous to those of the `profiles` map defined in {{!I-D.ietf-acme-profiles}}. Their contents are up to the CA; for example, they might be prose descriptions of the properties of the profile, or they might be URLs pointing at a documentation site. ACME Clients SHOULD present these profile set names and descriptions to their operator during initial setup and at appropriate times thereafter.
+The human-readable descriptions are analogous to those of the `profiles` map defined in {{!I-D.ietf-acme-profiles}}. Their contents are up to the CA; for example, they might be prose descriptions of the properties of the profile, or they might be URLs pointing at a documentation site. ACME Clients SHOULD present these profile set names and descriptions to their operator during initial setup and at appropriate times thereafter.
 
 Profile sets MAY contain overlapping profiles.
 
@@ -120,9 +120,9 @@ ACME Clients MAY implement the above with the following example procedure, run p
 
    c. If the certificate does not exist, or is soon to expire, start a new order with the profile, as described in {{!I-D.ietf-acme-profiles}}, and complete its authorizations.
 
-3. Cancel any unfinished orders for profiles which are no longer in the profile set.
+3. Cancel any unfinished orders for profiles that are no longer in the profile set.
 
-4. If the client has a certificate for each profile in the profile set, remove certificates for profiles which are no longer in the profile set.
+4. If the client has a certificate for each profile in the profile set, remove certificates for profiles that are no longer in the profile set.
 
 Determining which certificate to use with which relying party is out of scope for this document. TLS {{?RFC8446}} implementations MAY use the procedures defined in {{Sections 4.4.2.2 and 4.4.2.3 of ?RFC8446}}, as well as other TLS extensions, to select certificates.
 
