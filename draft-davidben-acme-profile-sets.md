@@ -32,11 +32,19 @@ This document defines how an ACME Server may indicate collections of related cer
 
 # Introduction
 
-As PKIs evolve, an application may require multiple certificate profiles to satisfy the range of relying parties it supports. For example, in a certificate deployment transitioning to post-quantum cryptography, newer relying parties may expect post-quantum trust anchors, while older relying parties still only support classical ones. In other deployments, when a certification authority (CA) is found untrustworthy or its keys rotated or compromised, an application may use a certificate from a newer CA with newer relying parties that have removed the old CA, but still provision a certificate from the older CA with older relying parties that do not trust any newer CAs.
+As PKIs evolve, an application that authenticates with certificates may need to support a wide range of relying parties, both before and after some change. For example:
 
-{{!I-D.ietf-acme-profiles}} defines a mechanism for ACME Clients to choose between different certificate profiles from a single ACME Server. However, in applications that require multiple profiles, an ACME Client must know which profiles are needed. This document extends that mechanism with *profile sets*.
+* When transitioning to post-quantum cryptography, newer relying parties may expect post-quantum trust anchors, while older, unupdated relying parties still only support classical ones.
 
-A profile set is a set of profiles, defined by the ACME Server and potentially updated over time. An ACME Client configured with a profile set can request a certificate for each profile, transparently updating its certificate set as the profile set evolves.
+* When a certification authority (CA) is found untrustworthy, or its keys rotated or compromised, newer relying parties may expect a newer CA instance, while older, unupdated relying parties may only support the older CA.
+
+As the furthest relying parties diverge, using a single certificate may not be feasible. Applications may then need to obtain multiple certificates, presenting different certificates to different relying parties.
+
+{{!I-D.ietf-acme-profiles}} defines ACME profiles, a mechanism for ACME Clients to choose between different certificate profiles from a single ACME Server. However, in applications that require certificates from multiple profiles, an ACME Client must know which profiles are needed, and be updated over time.
+
+This document extends ACME profiles with *profile sets*. A profile set is a set of related profiles, defined by the ACME Server. As PKIs evolve, the ACME Server can update its profile sets to reflect relying party needs. In particular, if satisfying all relying parties with a single profile would be infeasible or inefficient, the ACME Server can add a profile to the profile set.
+
+An ACME Client configured with a profile set requests a certificate for each profile, automatically incorporating updates to the profile set as part of certificate renewal. This allows the ACME Server to aid ACME Clients in handling PKI evolution.
 
 # Conventions and Definitions
 
