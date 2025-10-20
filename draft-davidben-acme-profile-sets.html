@@ -9,21 +9,20 @@
 <meta content="
        This document defines how an ACME Server may indicate collections of related certificate profiles to ACME Clients. 
     " name="description">
-<meta content="xml2rfc 3.30.2" name="generator">
+<meta content="xml2rfc 3.31.0" name="generator">
 <meta content="draft-davidben-acme-profile-sets-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.30.2
-    Python 3.12.11
+  xml2rfc 3.31.0
+    Python 3.12.12
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
     Jinja2 3.1.6
     lxml 5.3.1
-    platformdirs 4.4.0
+    platformdirs 4.5.0
     pycountry 24.6.1
     PyYAML 6.0.2
     requests 2.32.5
-    setuptools 80.9.0
     wcwidth 0.2.14
 -->
 <link href="draft-davidben-acme-profile-sets.xml" rel="alternate" type="application/rfc+xml">
@@ -1047,7 +1046,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Benjamin</td>
-<td class="center">Expires 20 April 2026</td>
+<td class="center">Expires 23 April 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1060,12 +1059,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-davidben-acme-profile-sets-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-10-17" class="published">17 October 2025</time>
+<time datetime="2025-10-20" class="published">20 October 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-04-20">20 April 2026</time></dd>
+<dd class="expires"><time datetime="2026-04-23">23 April 2026</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1099,7 +1098,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 20 April 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 23 April 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1177,9 +1176,19 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">As PKIs evolve, an application may require multiple certificate profiles to satisfy the range of relying parties it supports. For example, in a certificate deployment transitioning to post-quantum cryptography, newer relying parties may expect post-quantum trust anchors, while older relying parties still only support classical ones. In other deployments, when a certification authority (CA) is found untrustworthy or its keys rotated or compromised, an application may use a certificate from a newer CA with newer relying parties that have removed the old CA, but still provision a certificate from the older CA with older relying parties that do not trust any newer CAs.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2"><span>[<a href="#I-D.ietf-acme-profiles" class="cite xref">I-D.ietf-acme-profiles</a>]</span> defines a mechanism for ACME Clients to choose between different certificate profiles from a single ACME Server. However, in applications that require multiple profiles, an ACME Client must know which profiles are needed. This document extends that mechanism with <em>profile sets</em>.<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">A profile set is a set of profiles, defined by the ACME Server and potentially updated over time. An ACME Client configured with a profile set can request a certificate for each profile, transparently updating its certificate set as the profile set evolves.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-1">As PKIs evolve, an application that authenticates with certificates may need to support a wide range of relying parties, both before and after some change. For example:<a href="#section-1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1-2.1">
+          <p id="section-1-2.1.1">When transitioning to post-quantum cryptography, newer relying parties may expect post-quantum trust anchors, while older, unupdated relying parties still only support classical ones.<a href="#section-1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-1-2.2">
+          <p id="section-1-2.2.1">When a certification authority (CA) is found untrustworthy, or its keys rotated or compromised, newer relying parties may expect a newer CA instance, while older, unupdated relying parties may only support the older CA.<a href="#section-1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-1-3">As the furthest relying parties diverge, using a single certificate may not be feasible. Applications may then need to obtain multiple certificates, presenting different certificates to different relying parties.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4"><span>[<a href="#I-D.ietf-acme-profiles" class="cite xref">I-D.ietf-acme-profiles</a>]</span> defines ACME profiles, a mechanism for ACME Clients to choose between different certificate profiles from a single ACME Server. However, in applications that require certificates from multiple profiles, an ACME Client must know which profiles are needed, and be updated over time.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">This document extends ACME profiles with <em>profile sets</em>. A profile set is a set of related profiles, defined by the ACME Server. As PKIs evolve, the ACME Server can update its profile sets to reflect relying party needs. In particular, if satisfying all relying parties with a single profile would be infeasible or inefficient, the ACME Server can add a profile to the profile set.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">An ACME Client configured with a profile set requests a certificate for each profile, automatically incorporating updates to the profile set as part of certificate renewal. This allows the ACME Server to aid ACME Clients in handling PKI evolution.<a href="#section-1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions-and-definitions">
